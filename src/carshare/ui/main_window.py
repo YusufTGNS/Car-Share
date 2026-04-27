@@ -140,6 +140,11 @@ class MainWindow(ctk.CTk):
         self.bind("<Return>", self._on_enter_key)
         self.bind("<Escape>", self._on_escape_key)
 
+    def report_callback_exception(self, exc, val, tb) -> None:
+        if isinstance(val, Exception) and "bad window path name" in str(val):
+            return
+        super().report_callback_exception(exc, val, tb)
+
     def _show_auth_screen(self) -> None:
         if self.main_container is not None:
             self.main_container.destroy()
